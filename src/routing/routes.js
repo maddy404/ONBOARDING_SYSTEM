@@ -1,5 +1,5 @@
-import { LANDING, HOME, SLOT_BOOKING, ONBOARDING } from "./paths";
-import { Home, SlotBooking } from "../pages/index";
+import { LANDING, HOME, SLOT_BOOKING, ONBOARDING, PLAN } from "./paths";
+import { Home, SlotBooking, Plan } from "../pages/index";
 
 const LANDING_ONE = {
   component: Home,
@@ -21,6 +21,17 @@ const ONBOARDING_FOUR = {
   path: ONBOARDING,
 };
 
-const routes = [LANDING_ONE, HOME_TWO, SLOT_BOOKING_THREE, ONBOARDING_FOUR];
+const PLAN_FIVE = {
+  component: Plan,
+  path: PLAN,
+};
+
+const routes = [
+  LANDING_ONE,
+  HOME_TWO,
+  SLOT_BOOKING_THREE,
+  ONBOARDING_FOUR,
+  PLAN_FIVE,
+];
 
 export default routes;

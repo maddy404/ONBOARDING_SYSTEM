@@ -40,7 +40,7 @@ export const Home = () => {
       }, 400);
     } else {
       //Route to last page
-      navigate("/SlotBooking");
+      navigate("/Plan");
       setNextValue(1);
     }
   };

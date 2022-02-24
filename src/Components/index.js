@@ -11,3 +11,4 @@ export { Category } from "./Category/Category";
 export { SearchDropDown } from "./SearchDropDown/SearchDropDown";
 export { TimerAndPageNo } from "./TimerAndPageNo/TimerAndPageNo";
 export { YesActionNext } from "./YesActionNext/YesActionNext";
+export { FullPageLoader } from "./FullPageLoader/FullPageLoader";

@@ -142,7 +142,7 @@ export const SlotBooking = () => {
           </div>
         </div>
         <div className="booking__send">
-          <div className="booking__email">
+          <div className="booking__email" style={{ display: "none" }}>
             <span className="booking__email-text"> Your email </span>
             <input
               type="email"

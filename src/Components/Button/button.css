@@ -1,0 +1,4 @@
+.btn_disabled {
+    background-color: grey !important;
+    cursor: no-drop !important
+}

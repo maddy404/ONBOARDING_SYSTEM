@@ -4,7 +4,7 @@ export const SearchDropDown = ({ Logistics }) => {
   const [isShowAddList, setShowAddList] = useState(false);
   const [addList, setAddList] = useState([]);
   const [inputStr, setInputStr] = useState();
-  const { setIsBtnDisabled } = useBtnContext();
+  const { setIsBtnDisabled, setLogistics } = useBtnContext();
 
   const [selectedLogistic, setSelectedLogistic] = useState("");
   const logisticsRef = useRef;
@@ -35,6 +35,9 @@ export const SearchDropDown = ({ Logistics }) => {
     setAddList((prev) => {
       return [...prev, selectedLogistic];
     });
+    setLogistics((prev) => {
+      return [...prev, selectedLogistic];
+    });
 
     if (addList) {
       setIsBtnDisabled(false);
@@ -56,8 +59,11 @@ export const SearchDropDown = ({ Logistics }) => {
     } else {
       const remainingItems = addList.filter((item) => item !== itemToRemove);
       setAddList(remainingItems);
+      setLogistics(remainingItems);
     }
   };
+
+  console.log();
   return (
     <div className="add">
       <div className="add__search">

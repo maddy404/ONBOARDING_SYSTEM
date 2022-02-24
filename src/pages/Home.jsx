@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { LeftSide, RightSide } from "../Components";
+import { useBtnContext } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import { content } from "../Data/data";
+import axios from "axios";
 import "animate.css";
 export const Home = () => {
   const [nextValue, setNextValue] = useState(1);
@@ -13,12 +15,19 @@ export const Home = () => {
   const [isYesNo, setIsYesNo] = useState(false);
   const [yesActionText, setYesActionText] = useState("");
   const [category, setCategory] = useState([]);
-  const [logistics, setLogistics] = useState([]);
+  // const [logistics, setLogistics] = useState([]);
   const [animateLeft, setAnimateLeft] = useState();
   const [animateRight, setAnimateRight] = useState();
   const [activePage, setActivePage] = useState();
-  const [radioChecked, setRadioChecked] = useState(false);
   const navigate = useNavigate();
+  const {
+    store,
+    setCommonProductCategories,
+    commonProductCategories,
+    setLogisticProviders,
+    logisticsProviders,
+    setPreferredBillingPlans,
+  } = useBtnContext();
 
   const loadContent = () => {
     if (nextValue > 0 && nextValue < 6) {
@@ -29,16 +38,47 @@ export const Home = () => {
         setAnimateLeft("animate__slideInLeft");
         setAnimateRight("animate__slideInUp");
       }, 400);
-
-      // if (activePage === 3) {
-      //   setRadioChecked(false);
-      // }
     } else {
       //Route to last page
       navigate("/SlotBooking");
       setNextValue(1);
     }
   };
+
+  //http://localhost:3000/?store=devreturnsadmin.myshopify.com
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/onboarding?store=${store}`
+        );
+        console.log(response.status);
+        if (response?.status === 200) {
+          console.log("yes");
+          localStorage.setItem("Store", response?.data?.store);
+          setCommonProductCategories(response?.data?.common_product_categories);
+          setLogisticProviders(response?.data?.logistic_providers);
+          setPreferredBillingPlans(response?.data?.preferred_billing_plans);
+
+          // localStorage.setItem(
+          //   "CommonProductCategories",
+          //   response?.data?.common_product_categories
+          // );
+          // localStorage.setItem(
+          //   "LogisticProviders",
+          //   response?.data?.logistic_providers
+          // );
+          // localStorage.setItem(
+          //   "PreferredBillingPlans",
+          //   response?.data?.preferred_billing_plans
+          // );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (() => {
@@ -50,8 +90,8 @@ export const Home = () => {
           setRightHeading(item.rightHeading),
           setRightDescription(item.rightDescription),
           setIsYesNo(item.isShowYesNo),
-          setCategory(item.category),
-          setLogistics(item.logisticsDropDown),
+          // setCategory(item.category),
+          // setLogistics(item.logisticsDropDown),
           setActivePage(item.pageNo),
           setYesActionText(item.YesActionNext)
         );
@@ -73,8 +113,8 @@ export const Home = () => {
         RightSideTitleText={rightHeading}
         InnerDesc={rightDescription}
         isShowYesNo={isYesNo}
-        CheckBoxText={category}
-        Logistics={logistics}
+        CheckBoxText={commonProductCategories}
+        Logistics={logisticsProviders}
         LoadContent={loadContent}
         RightSideAnimation={animateRight}
         ActivePage={activePage}

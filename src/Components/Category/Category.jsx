@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useBtnContext } from "../../contexts";
 export const Category = ({ CheckBoxText }) => {
-  const { setIsBtnDisabled } = useBtnContext();
+  const { setIsBtnDisabled, setCategory, category, commonProductCategories } =
+    useBtnContext();
   const categoryHandler = (e, item) => {
     if (item && e.target.checked) {
-      setIsBtnDisabled(false);
+      setCategory((prev) => {
+        return [...prev, item];
+      });
     } else {
-      setIsBtnDisabled(true);
+      const distinctCategory = category.filter((category) => category !== item);
+      setCategory(distinctCategory);
     }
-    console.log(e.target.checked);
   };
+
+  useEffect(() => {
+    if (category?.length === 0) {
+      setIsBtnDisabled(true);
+    } else {
+      setIsBtnDisabled(false);
+    }
+  }, [category, setIsBtnDisabled]);
+
   return (
     <div className="checkbox__wrapper">
-      {CheckBoxText.map((item, index) => {
+      {commonProductCategories?.map((item, index) => {
         return (
           <label className="checkbox__label" key={index}>
             <input
